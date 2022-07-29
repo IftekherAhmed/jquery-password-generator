@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+  <title>jquery Password Generator</title>
+</head>
+
+<body>
+  <!-- Container -->
+  <div class="container">
+    <a href="https://codepen.io/kachibito/pen/PjqrEE?editors=1010">Original link</a>
+    <h1>jQuery Password Generator <small>(v2)</small></h1>
+    <h4>Using jQuery to quickly and easily generate passwords.</h4>
+    <br>
+
+    <!-- row -->
+    <div class="row">
+      <!-- col-sm-12 -->
+      <div class="col-sm-12">
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control input-lg" rel="gp" data-size="15" data-character-set="a-z,A-Z,0-9,#">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info btn-lg getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+      </div>
+      <!--/ col-sm-12 -->
+    </div>
+    <!--/ row -->
+    <br><br>
+
+    <!-- row -->
+    <div class="row">
+      <!-- col-sm-6 -->
+      <div class="col-sm-6">
+        <h2>Script Demo</h2>
+        <hr>
+
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <label class="text-muted">Using all of the character sets:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" rel="gp" data-size="32" data-character-set="a-z,A-Z,0-9,#">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <label class="text-muted">Using both the a-z and A-Z character sets:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" rel="gp" data-size="32" data-character-set="a-z,A-Z">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <label class="text-muted">Using only the A-Z character set:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" rel="gp" data-size="20" data-character-set="A-Z">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <label class="text-muted">Using only the a-z character set:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" rel="gp" data-size="32" data-character-set="a-z">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+
+        <!-- form-group -->
+        <div class="form-group mb-3">
+          <label class="text-muted">Using only the number character set:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" rel="gp" data-size="12" data-character-set="0-9">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info getNewPass">
+                <span class="bi bi-arrow-clockwise"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!--/ form-group -->
+      </div>
+      <!--/ col-sm-6 -->
+
+      <!-- col-sm-5 -->
+      <div class="col-sm-5 col-sm-offset-1">
+        <h2>How It Works</h2>
+        <hr>
+        <p><code>data-size</code> attribute is used to set the number of characters that is used in the field, if you
+          need a password with 12 characters, then set this attribute to 12.</p>
+        <p><code>data-character-set</code> attribute is used to set the character type used in the password. You can use
+          numbers <code>0-9</code>, letters <code>a-z</code> (and or) <code>A-Z</code>, and spical characters
+          <code>#</code>. All of these sets can be used individually work together.
+        </p>
+      </div>
+      <!--/ col-sm-5 -->
+    </div>
+  <!--/ row -->
+  </div>
+  <!--/ Container -->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    // Generate a password string
+    function randString(id) {
+      var dataSet = $(id).attr('data-character-set').split(',');
+      var possible = '';
+      if ($.inArray('a-z', dataSet) >= 0) {
+        possible += 'abcdefghijklmnopqrstuvwxyz';
+      }
+      if ($.inArray('A-Z', dataSet) >= 0) {
+        possible += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      }
+      if ($.inArray('0-9', dataSet) >= 0) {
+        possible += '0123456789';
+      }
+      if ($.inArray('#', dataSet) >= 0) {
+        possible += '![]{}()%&*$#^<>~@|';
+      }
+      var text = '';
+      for (var i = 0; i < $(id).attr('data-size'); i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return text;
+    }
+
+    // Create a new password on page load
+    $('input[rel="gp"]').each(function () {
+      $(this).val(randString($(this)));
+    });
+
+    // Create a new password
+    $(".getNewPass").click(function () {
+      var field = $(this).closest('div').find('input[rel="gp"]');
+      field.val(randString(field));
+    });
+
+    // Auto Select Pass On Focus
+    $('input[rel="gp"]').on("click", function () {
+      $(this).select();
+    });
+  </script>
+</body>
+</html>
